@@ -2,6 +2,8 @@ group 'com.mr.flutter.plugin.filepicker'
 version '1.0-SNAPSHOT'
 
 buildscript {
+    ext.kotlin_version = '1.4.21'
+    ext.kotlin_coroutinesVersion = "1.2.1"
     repositories {
         google()
         jcenter()
@@ -9,6 +11,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:3.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -20,12 +23,14 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 29
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 17
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     lintOptions {
@@ -35,5 +40,11 @@ android {
         implementation 'androidx.core:core:1.0.2'
         implementation 'androidx.annotation:annotation:1.0.0'
         implementation "androidx.lifecycle:lifecycle-runtime:2.1.0"
-    }
+        implementation 'com.droidninja:filepicker:2.2.5'
+        implementation 'androidx.appcompat:appcompat:1.2.0'
+        implementation 'com.google.android.material:material:1.1.0'
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlin_coroutinesVersion"
+        implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlin_coroutinesVersion"
+        implementation 'com.github.bumptech.glide:glide:4.9.0'
+      }
 }

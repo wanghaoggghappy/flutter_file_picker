@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.storage.StorageManager;
 import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.provider.OpenableColumns;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
@@ -263,4 +264,35 @@ public class FileUtils {
         else return File.separator;
     }
 
+    public static FileInfo getFileInfo(Context context, Uri uri) {
+        final FileInfo.Builder fileInfo = new FileInfo.Builder();
+        Cursor returnCursor = null;
+        try {
+            String[] projection = {MediaStore.Images.Media.DATA, OpenableColumns.DISPLAY_NAME, OpenableColumns.SIZE};
+            returnCursor =
+                    context.getContentResolver().query(uri, projection, null, null, null);
+            if (returnCursor == null) {
+                return null;
+            }
+            int nameIndex = returnCursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
+            int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
+            int pathIndex = returnCursor.getColumnIndex(MediaStore.Images.Media.DATA);
+            returnCursor.moveToFirst();
+            String path = returnCursor.getString(pathIndex);
+            String name = returnCursor.getString(nameIndex);
+            int size = (int) returnCursor.getLong(sizeIndex);
+            returnCursor.moveToFirst();
+            if (!new File(path).exists()) {
+                path = "";
+            }
+            fileInfo.withName(name).withUri(uri.toString()).withSize(size).withPath(path);
+        } catch (Exception e) {
+            return null;
+        } finally {
+            if (returnCursor != null) {
+                returnCursor.close();
+            }
+        }
+        return fileInfo.build();
+    }
 }
