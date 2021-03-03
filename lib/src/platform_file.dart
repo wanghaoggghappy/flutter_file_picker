@@ -8,12 +8,14 @@ class PlatformFile {
     this.bytes,
     this.readStream,
     this.size,
+    this.uri
   });
 
   PlatformFile.fromMap(Map data, {this.readStream})
       : this.path = data['path'],
         this.name = data['name'],
         this.bytes = data['bytes'],
+        this.uri = data['uri'],
         this.size = data['size'];
 
   /// The absolute path for a cached copy of this file. It can be used to create a
@@ -35,6 +37,8 @@ class PlatformFile {
 
   /// The file size in bytes.
   final int size;
+
+  final String uri;
 
   /// File extension for this file.
   String get extension => name?.split('.')?.last;
