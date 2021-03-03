@@ -60,6 +60,22 @@ class FilePickerIO extends FilePicker {
     return null;
   }
 
+  @override
+  Future<String> getFilePath(String uri) async {
+    try {
+      final String result = await _channel.invokeMethod('file_path', {
+        'uri': uri
+      });
+      return result;
+    } on PlatformException catch (ex) {
+      if (ex.code == "unknown_path") {
+        print(
+            '[$_tag] Could not resolve directory path. Maybe it\'s a protected one or unsupported (such as Downloads folder). If you are on Android, make sure that you are on SDK 21 or above.');
+      }
+    }
+    return null;
+  }
+
   Future<FilePickerResult> _getPath(
     FileType fileType,
     bool allowMultipleSelection,

@@ -4,19 +4,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.util.Log;
 
 import androidx.annotation.VisibleForTesting;
 import androidx.core.app.ActivityCompat;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -182,6 +178,13 @@ public class FilePickerDelegate implements PluginRegistry.ActivityResultListener
     }
 
     @SuppressWarnings("unchecked")
+    private void finishWithSuccess(FileInfo data, MethodChannel.Result result) {
+        if (result != null) {
+            result.success(data.path);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     private void finishWithSuccess(Object data) {
         if (eventSink != null) {
             this.dispatchEventStatus(false);
@@ -202,6 +205,14 @@ public class FilePickerDelegate implements PluginRegistry.ActivityResultListener
             this.pendingResult.success(data);
             this.clearPendingResult();
         }
+    }
+
+    private void finishWithError(final String errorCode, final String errorMessage, MethodChannel.Result result) {
+        if (result == null) {
+            return;
+        }
+
+        result.error(errorCode, errorMessage, null);
     }
 
     private void finishWithError(final String errorCode, final String errorMessage) {
@@ -228,6 +239,21 @@ public class FilePickerDelegate implements PluginRegistry.ActivityResultListener
 
     private void clearPendingResult() {
         this.pendingResult = null;
+    }
+
+    public void getFilePath(final String uri, final MethodChannel.Result result) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final FileInfo file = FileUtils.openFileStream(FilePickerDelegate.this.activity, Uri.parse(uri), false);
+                if (file != null) {
+                    finishWithSuccess(file, result);
+                } else {
+                    finishWithError("parse uri fail ", uri, result);
+                }
+
+            }
+        }).start();
     }
 
     interface PermissionManager {

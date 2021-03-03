@@ -11,6 +11,7 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   String _fileName;
   List<PlatformFile> _paths;
+  String _uriPath;
   String _directoryPath;
   String _extension;
   bool _loadingPath = false;
@@ -36,6 +37,11 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
             : null,
       ))
           ?.files;
+      _uriPath = await FilePicker.platform.getFilePath(_paths[0].uri);
+      print('********');
+      print(_paths[0].path);
+      print(_paths[0].uri);
+      print(_uriPath);
     } on PlatformException catch (e) {
       print("Unsupported operation" + e.toString());
     } catch (ex) {
@@ -196,7 +202,7 @@ class _FilePickerDemoState extends State<FilePickerDemo> {
                                                   .toList()[index]
                                               : _fileName ?? '...');
                                       final path = _paths
-                                          .map((e) => e.path)
+                                          .map((e) => e.uri)
                                           .toList()[index]
                                           .toString();
 

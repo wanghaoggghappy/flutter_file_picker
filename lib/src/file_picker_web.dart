@@ -38,6 +38,11 @@ class FilePickerWeb extends FilePicker {
   }
 
   @override
+  Future<String> getFilePath(String uri) async {
+    return "";
+  }
+
+  @override
   Future<FilePickerResult> pickFiles({
     FileType type = FileType.any,
     List<String> allowedExtensions,

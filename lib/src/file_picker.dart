@@ -87,4 +87,9 @@ abstract class FilePicker extends PlatformInterface {
   /// Returns [null] if folder path couldn't be resolved.
   Future<String> getDirectoryPath() async =>
       throw UnimplementedError('getDirectoryPath() has not been implemented.');
+
+  /// Selects a directory and returns its absolute path.
+  Future<String> getFilePath(String uri) async =>
+      throw UnimplementedError('getDirectoryPath() has not been implemented.');
+
 }
