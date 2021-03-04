@@ -278,8 +278,15 @@ public class FileUtils {
             int sizeIndex = returnCursor.getColumnIndex(OpenableColumns.SIZE);
             int pathIndex = returnCursor.getColumnIndex(MediaStore.Images.Media.DATA);
             returnCursor.moveToFirst();
-            String path = returnCursor.getString(pathIndex);
             String name = returnCursor.getString(nameIndex);
+            String path = "";
+            try {
+                path = returnCursor.getString(pathIndex);
+            } catch (Exception e) {
+                //path data may throw exception?? cause data is deprecated
+            }
+            //file under weibo return the whole path
+            name = new File(name).getName();
             int size = (int) returnCursor.getLong(sizeIndex);
             returnCursor.moveToFirst();
             if (!new File(path).exists()) {
