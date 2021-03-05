@@ -285,6 +285,9 @@ public class FileUtils {
             } catch (Exception e) {
                 //path data may throw exception?? cause data is deprecated
             }
+            if (path == null) {
+                path = "";
+            }
             //file under weibo return the whole path
             name = new File(name).getName();
             int size = (int) returnCursor.getLong(sizeIndex);

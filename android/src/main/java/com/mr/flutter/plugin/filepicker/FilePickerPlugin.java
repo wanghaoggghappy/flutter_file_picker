@@ -160,7 +160,7 @@ public class FilePickerPlugin implements MethodChannel.MethodCallHandler, Flutte
             return;
         }
 
-        fileType = call.method;
+        fileType = FilePickerPlugin.resolveType(call.method);
         String[] allowedExtensions = null;
 
         if (fileType == null) {
@@ -177,6 +177,27 @@ public class FilePickerPlugin implements MethodChannel.MethodCallHandler, Flutte
             this.delegate.startFileExplorer(fileType, isMultipleSelection, withData, allowedExtensions, result);
         }
 
+    }
+
+    private static String resolveType(final String type) {
+
+        switch (type) {
+            case "audio":
+                return "audio/*";
+            case "image":
+                return "image/*";
+            case "video":
+                return "video/*";
+            case "media":
+                return "image/*,video/*";
+            case "any":
+            case "custom":
+                return "*/*";
+            case "dir":
+                return "dir";
+            default:
+                return null;
+        }
     }
 
 
