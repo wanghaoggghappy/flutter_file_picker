@@ -147,14 +147,14 @@ public class FilePickerDelegate implements PluginRegistry.ActivityResultListener
         if (type.equals("media")) {
             FilePickerBuilder.getInstance()
                     .setMaxCount(500) //optional
-                    .setActivityTheme(R.style.LibAppTheme) //opt
+                    .setActivityTheme(R.style.FilePickerTheme) //opt
                     .enableVideoPicker(true)
                     .enableCameraSupport(false)
                     .pickPhoto(activity, REQUEST_CODE);
         } else {
             FilePickerBuilder.getInstance()
                     .setMaxCount(500) //optional
-                    .setActivityTheme(R.style.LibAppTheme) //opt
+                    .setActivityTheme(R.style.FilePickerTheme) //opt
                     .enableVideoPicker(true)
                     .pickFile(activity, REQUEST_CODE);
         }

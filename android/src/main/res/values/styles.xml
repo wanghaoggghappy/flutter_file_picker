@@ -10,12 +10,12 @@
     <style name="FilePickerTheme" parent="Theme.MaterialComponents.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#ffffff</item>
-        <item name="colorPrimaryDark">#a93409</item>
+        <item name="colorPrimaryDark">#ffffff</item>
         <item name="colorAccent">#ff0000</item>
         <item name="android:colorBackground">@android:color/background_light</item>
         <item name="android:windowBackground">@android:color/white</item>
         <item name="toolbarStyle">@style/FilePickerToolbarTheme</item>
-        <item name="tabStyle">@style/FilePickerTabLayout</item>
+        <item name="tabStyle">@style/PickerTabLayout</item>
     </style>
 
     <style name="FilePickerToolbarTheme" parent="Widget.MaterialComponents.Toolbar.Primary">
@@ -23,7 +23,7 @@
         <item name="android:theme">@style/ThemeOverlay.App.Toolbar.Light</item>
     </style>
 
-    <style name="FilePickerTabLayout" parent="Widget.MaterialComponents.TabLayout">
+    <style name="PickerTabLayout" parent="Widget.MaterialComponents.TabLayout">
         <!--        tab background-->
         <item name="tabBackground">@android:color/white</item>
         <!--        tab text color selector : set selector accordingly to dark or light theme-->
@@ -32,5 +32,7 @@
         <item name="tabIndicatorColor">#FF0000FF</item>
         <item name="tabGravity">fill</item>
         <item name="tabMaxWidth">0dp</item>
+
     </style>
+
 </resources>
