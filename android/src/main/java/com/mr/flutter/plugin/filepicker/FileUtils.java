@@ -10,6 +10,7 @@ import android.os.storage.StorageManager;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
@@ -288,8 +289,11 @@ public class FileUtils {
             if (path == null) {
                 path = "";
             }
-            //file under weibo return the whole path
-            name = new File(name).getName();
+            //file under weibo name return the whole path
+            if (!TextUtils.isEmpty(name)) {
+                name = new File(name).getName();
+            }
+
             int size = (int) returnCursor.getLong(sizeIndex);
             returnCursor.moveToFirst();
             if (!new File(path).exists()) {
