@@ -293,6 +293,9 @@ public class FileUtils {
             if (!TextUtils.isEmpty(name)) {
                 name = new File(name).getName();
             }
+            if (TextUtils.isEmpty(name)) {
+                name = new File(path).getName();
+            }
 
             int size = (int) returnCursor.getLong(sizeIndex);
             returnCursor.moveToFirst();
